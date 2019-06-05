@@ -1,10 +1,14 @@
-# http-log #
+# httplog #
 
 Simple node app to log http request right into your console.
 
-## How it works ##
+## Installation ##
 
-Run `httplog --help` to see how it works.
+Run `npm install -g @floriandorau/httplog` to install is globally on your system.
+
+After that run `httplog --help` to see how it works.
+
+## How it works ##
 
 Use the following command to start a local http server running at port 8080.
 

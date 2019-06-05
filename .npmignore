@@ -1,0 +1,5 @@
+.gitignore
+.eslintrc.yml
+
+# Output of 'npm pack'
+*.tgz
