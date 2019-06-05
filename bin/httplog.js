@@ -5,16 +5,16 @@ const pkg = require('../package.json');
 
 const ngrok = require('../lib/ngrok');
 const server = require('../lib/server');
-const { Proxy } = require('../lib/proxy');
 const { debug, info, error } = require('../lib/logger');
+const { LogRequestHandler } = require('../lib/handler/log-handler');
+const { ProxyRequestHandler } = require('../lib/handler/proxy-handler');
 
 const actionHandler = async (port, cmd) => {
-    
+
     info('\nWelcome to httplog\n');
-    
-    let proxy;
+
     try {
-        if(cmd.debug) {
+        if (cmd.debug) {
             process.debug = true;
         }
 
@@ -23,13 +23,16 @@ const actionHandler = async (port, cmd) => {
             await ngrok.start(port);
         }
 
+        const requestHandlers = [];
+        requestHandlers.push(new LogRequestHandler(cmd.prettyPrin));
+
         if (cmd.proxyMode) {
             [proxyHost, proxyPort] = cmd.proxyMode.split(':');
             debug(`Running httplog in proxy-mode for '${proxyHost}:${proxyPort}'`);
-            proxy = new Proxy(proxyHost, proxyPort);
+            requestHandlers.push(new ProxyRequestHandler(proxyHost, proxyPort));
         }
 
-        server.start(port, { prettify: cmd.prettyPrint, proxy: proxy });
+        server.start(port, requestHandlers);
     } catch (err) {
         error(err.message, err);
         process.exit(1);
