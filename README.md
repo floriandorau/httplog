@@ -7,7 +7,7 @@ Simple node app to log http request right into your console.
 Run the following to install httplog globally on your system.
 
 ```bash
-`npm install -g @floriandorau/httplog`
+npm install -g @floriandorau/httplog
 ```
 
 After that run `httplog --help` to see how it works.
@@ -22,9 +22,9 @@ httplog 8080
 
 You can now redirect your traffic to the started http server. Your request data will dumped into you console.
 
-### Options ###
+## Options ##
 
-#### ngrok ####
+### ngrok ###
 
 Use this option to make your _httplog_ server available over the public internet, e.g.
 
@@ -34,7 +34,7 @@ httplog 8080 --ngrok
 
 With the above command the port `8080` will be exposed using the [ngrok](https://ngrok.com/) service.
 
-#### proxy-mode [Beta] #####
+### proxy-mode [Beta] ####
 
 Use this option to make _httplog_ acting as a proxy, e.g.
 
