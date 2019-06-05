@@ -4,7 +4,11 @@ Simple node app to log http request right into your console.
 
 ## Installation ##
 
-Run `npm install -g @floriandorau/httplog` to install is globally on your system.
+Run the following to install httplog globally on your system.
+
+```bash
+`npm install -g @floriandorau/httplog`
+```
 
 After that run `httplog --help` to see how it works.
 
