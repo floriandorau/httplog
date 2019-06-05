@@ -9,8 +9,9 @@ const { Proxy } = require('../lib/proxy');
 const { debug, info, error } = require('../lib/logger');
 
 const actionHandler = async (port, cmd) => {
-    info('Welcome to httplog');
-
+    
+    info('\nWelcome to httplog\n');
+    
     let proxy;
     try {
         if(cmd.debug) {
