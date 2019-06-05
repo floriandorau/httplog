@@ -13,14 +13,18 @@ const actionHandler = async (port, cmd) => {
 
     let proxy;
     try {
+        if(cmd.debug) {
+            process.debug = true;
+        }
+
         if (cmd.ngrok) {
-            debug('Run httplog with ngrok');
+            debug('Running httplog with ngrok');
             await ngrok.start(port);
         }
 
         if (cmd.proxyMode) {
             [proxyHost, proxyPort] = cmd.proxyMode.split(':');
-            debug(`Running httplog server in proxy-mode for '${proxyHost}:${proxyPort}'`);
+            debug(`Running httplog in proxy-mode for '${proxyHost}:${proxyPort}'`);
             proxy = new Proxy(proxyHost, proxyPort);
         }
 
@@ -37,6 +41,7 @@ program
     .usage('<port> [options] ')
     .option('-n, --ngrok', 'Exposes httplog to the public internet using ngrok')
     .option('-p, --proxy-mode <host:port>', '[BETA] Runs httplog in a proxy mode where incoming request will be forwared to "host:port"')
+    .option('-d, --debug', 'Enablee debug logging')
     .action(actionHandler)
 
 program.parse(process.argv);
