@@ -16,10 +16,22 @@ You can now redirect your traffic to the started http server. Your request data 
 
 ### Options ###
 
-- `--ngrok`: Use this option to make your _httplog_ server available over the public internet. 
+#### ngrok ####
+
+Use this option to make your _httplog_ server available over the public internet, e.g.
 
 ```bash
-httplog --ngrok 8080
+httplog 8080 --ngrok
 ```
 
 With the above command the port `8080` will be exposed using the [ngrok](https://ngrok.com/) service.
+
+#### proxy-mode [Beta] #####
+
+Use this option to make _httplog_ acting as a proxy, e.g.
+
+```bash
+httplog 8080 --proxy-mode localhost:8081
+```
+
+With this each incoming request at port `8080` will be forwarded to port `8081` too.
