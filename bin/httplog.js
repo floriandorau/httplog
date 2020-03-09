@@ -10,7 +10,6 @@ const { LogRequestHandler } = require('../lib/handler/log-handler');
 const { ProxyRequestHandler } = require('../lib/handler/proxy-handler');
 
 const actionHandler = async (port, cmd) => {
-
     info('\nWelcome to httplog\n');
 
     try {
@@ -27,7 +26,7 @@ const actionHandler = async (port, cmd) => {
         requestHandlers.push(new LogRequestHandler(cmd.prettyPrin));
 
         if (cmd.proxyMode) {
-            [proxyHost, proxyPort] = cmd.proxyMode.split(':');
+            const [proxyHost, proxyPort] = cmd.proxyMode.split(':');
             debug(`Running httplog in proxy-mode for '${proxyHost}:${proxyPort}'`);
             requestHandlers.push(new ProxyRequestHandler(proxyHost, proxyPort));
         }
@@ -46,6 +45,6 @@ program
     .option('-n, --ngrok', 'Exposes httplog to the public internet using ngrok')
     .option('-p, --proxy-mode <host:port>', '[BETA] Runs httplog in a proxy mode where incoming request will be forwared to "host:port"')
     .option('-d, --debug', 'Enablee debug logging')
-    .action(actionHandler)
+    .action(actionHandler);
 
 program.parse(process.argv);

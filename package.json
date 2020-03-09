@@ -16,7 +16,8 @@
     "chalk": "2.4.2",
     "commander": "2.20.0",
     "ngrok": "3.1.1",
-    "ora": "3.4.0"
+    "ora": "3.4.0",
+    "xml-formatter": "1.2.0"
   },
   "devDependencies": {
     "eslint": "5.16.0"
