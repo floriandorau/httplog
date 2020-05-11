@@ -5,7 +5,7 @@
   "repository": "github:floriandorau/httplog",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "lint": "eslint ./lib"
   },
   "bin": {
     "httplog": "./bin/httplog.js"
