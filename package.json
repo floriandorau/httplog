@@ -1,7 +1,7 @@
 {
   "name": "@floriandorau/httplog",
-  "version": "1.1.1",
-  "description": "Simple node app to log http request into your console",
+  "version": "1.2.0",
+  "description": "Simplte tool to log http requests",
   "repository": "github:floriandorau/httplog",
   "main": "index.js",
   "scripts": {
