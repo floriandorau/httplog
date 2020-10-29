@@ -13,15 +13,15 @@
   "author": "floriandorau",
   "license": "MIT",
   "dependencies": {
-    "chalk": "2.4.2",
-    "commander": "2.20.0",
-    "ngrok": "3.1.1",
-    "open": "7.0.4",
-    "ora": "3.4.0",
-    "xml-formatter": "1.2.0"
+    "chalk": "^4.1.0",
+    "commander": "^6.2.0",
+    "ngrok": "^3.3.0",
+    "open": "^7.3.0",
+    "ora": "^5.1.0",
+    "xml-formatter": "^2.3.1"
   },
   "devDependencies": {
-    "eslint": "5.16.0"
+    "eslint": "^7.12.1"
   },
   "engines": {
     "node": ">=11.1.0"
