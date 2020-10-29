@@ -26,16 +26,16 @@ You can now redirect your traffic to the started http server. Your request data 
 
 ### Full commands
 
-```bash
+```shell
 Usage: httplog [options]
 
-Simplte tool to log http requests
+Simple tool to log http requests into your terminal
 
 Options:
-  -V, --version             output the version number
-  -p, --port <port>         Port where to listen for incoming requests
-  -n --ngrok                Exposes httplog to the public internet using ngrok
-  -f, --file <file>         Pipe http request to <file>
+  -V, --version             Outputs current version number
+  -p, --port <port>         Port to listen for incoming requests
+  -f, --file <file>         Incoming requests will be logged to <file>
+  -n --ngrok                Exposes httplog to public internet using ngrok
   -d, --debug               Enable debug logging
   --proxy-mode <host:port>  [BETA] Runs httplog in a proxy mode where incoming request will be forwared to "host:port"
   -h, --help                output usage information
@@ -43,12 +43,20 @@ Options:
 
 ## Options
 
+### file
+
+Use this option to log incoming requests into a file, e.g.
+
+```bash
+httplog --port 8080 --file requests.txt
+```
+
 ### ngrok
 
 Use this option to make your _httplog_ server available over the public internet, e.g.
 
 ```bash
-httplog 8080 --ngrok
+httplog --port 8080 --ngrok
 ```
 
 With the above command the port `8080` will be exposed using the [ngrok](https://ngrok.com/) service.
@@ -58,7 +66,7 @@ With the above command the port `8080` will be exposed using the [ngrok](https:/
 Use this option to make _httplog_ acting as a proxy, e.g.
 
 ```bash
-httplog 8080 --proxy-mode localhost:8081
+httplog --port 8080 --proxy-mode localhost:8081
 ```
 
 With this each incoming request at port `8080` will be forwarded to port `8081` too.
