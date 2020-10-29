@@ -19,10 +19,27 @@ After that run `httplog --help` to see how it works.
 Use the following command to start a local http server running at port 8080.
 
 ```bash
-httplog 8080
+httplog --port 8080
 ```
 
-You can now redirect your traffic to the started http server. Your request data will dumped into you console.
+You can now redirect your traffic to the started http server. Your request data will dumped into your console.
+
+### Full commands
+
+```bash
+Usage: httplog [options]
+
+Simplte tool to log http requests
+
+Options:
+  -V, --version             output the version number
+  -p, --port <port>         Port where to listen for incoming requests
+  -n --ngrok                Exposes httplog to the public internet using ngrok
+  -f, --file <file>         Pipe http request to <file>
+  -d, --debug               Enable debug logging
+  --proxy-mode <host:port>  [BETA] Runs httplog in a proxy mode where incoming request will be forwared to "host:port"
+  -h, --help                output usage information
+```
 
 ## Options
 

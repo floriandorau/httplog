@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+
 const program = require('commander');
 
 const pkg = require('../package.json');
@@ -6,32 +7,43 @@ const pkg = require('../package.json');
 const ngrok = require('../lib/ngrok');
 const server = require('../lib/server');
 const { debug, info, error } = require('../lib/logger');
+
+const { FileHandler } = require('../lib/handler/file-handler');
 const { LogRequestHandler } = require('../lib/handler/log-handler');
 const { ProxyRequestHandler } = require('../lib/handler/proxy-handler');
 
-const actionHandler = async (port, cmd) => {
+const actionHandler = async (options) => {
     info('\nWelcome to httplog\n');
 
     try {
-        if (cmd.debug) {
+        if (!options.port) {
+            throw new Error('Option port is required');
+        }
+
+        if (options.debug) {
             process.debug = true;
         }
 
-        if (cmd.ngrok) {
+        if (options.ngrok) {
             debug('Running httplog with ngrok');
-            await ngrok.start(port);
+            await ngrok.start(options.port);
         }
 
         const requestHandlers = [];
-        requestHandlers.push(new LogRequestHandler(cmd.prettyPrin));
+        requestHandlers.push(new LogRequestHandler(options.pipe));
 
-        if (cmd.proxyMode) {
-            const [proxyHost, proxyPort] = cmd.proxyMode.split(':');
+        if (options.proxyMode) {
+            const [proxyHost, proxyPort] = options.proxyMode.split(':');
             debug(`Running httplog in proxy-mode for '${proxyHost}:${proxyPort}'`);
             requestHandlers.push(new ProxyRequestHandler(proxyHost, proxyPort));
         }
 
-        server.start(port, requestHandlers);
+        if (options.file) {
+            debug(`Running httplog with file logging '${options.file}'`);
+            requestHandlers.push(new FileHandler(options.file));
+        }
+
+        server.start(options.port, requestHandlers);
     } catch (err) {
         error(err.message, err);
         process.exit(1);
@@ -41,10 +53,13 @@ const actionHandler = async (port, cmd) => {
 program
     .version(pkg.version)
     .description(pkg.description)
-    .usage('<port> [options] ')
-    .option('-n, --ngrok', 'Exposes httplog to the public internet using ngrok')
-    .option('-p, --proxy-mode <host:port>', '[BETA] Runs httplog in a proxy mode where incoming request will be forwared to "host:port"')
-    .option('-d, --debug', 'Enablee debug logging')
-    .action(actionHandler);
+    .name('httplog')
+    .usage('[options]')
+    .option('-p, --port <port>', 'Port where to listen for incoming requests')
+    .option('-n --ngrok', 'Exposes httplog to the public internet using ngrok')
+    .option('-f, --file <file>', 'Pipe http request to <file>')
+    .option('-d, --debug', 'Enable debug logging')
+    .option('--proxy-mode <host:port>', '[BETA] Runs httplog in a proxy mode where incoming request will be forwared to "host:port"')
+    .action((cmdOpts) => actionHandler(cmdOpts));
 
 program.parse(process.argv);
