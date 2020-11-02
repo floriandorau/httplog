@@ -10,6 +10,7 @@ const { debug, info, error } = require('../lib/logger');
 
 const { FileHandler } = require('../lib/handler/file-handler');
 const { LogRequestHandler } = require('../lib/handler/log-handler');
+const { BrowserHandler } = require('../lib/handler/browser-handler');
 const { ProxyRequestHandler } = require('../lib/handler/proxy-handler');
 
 const actionHandler = async (options) => {
@@ -43,6 +44,12 @@ const actionHandler = async (options) => {
             requestHandlers.push(new FileHandler(options.file));
         }
 
+
+        if (options.browser) {
+            debug('Running httplog in browser-mode');
+            requestHandlers.push(new BrowserHandler());
+        }
+
         server.start(options.port, requestHandlers);
     } catch (err) {
         error(err.message, err);
@@ -56,8 +63,9 @@ program
     .name('httplog')
     .usage('[options]')
     .option('-p, --port <port>', 'Port where to listen for incoming requests')
-    .option('-n --ngrok', 'Exposes httplog to the public internet using ngrok')
     .option('-f, --file <file>', 'Pipe http request to <file>')
+    .option('-b, --browser', 'Pipe http requests to your preferred browser')
+    .option('-n --ngrok', 'Exposes httplog to the public internet using ngrok')
     .option('-d, --debug', 'Enable debug logging')
     .option('--proxy-mode <host:port>', '[BETA] Runs httplog in a proxy mode where incoming request will be forwared to "host:port"')
     .action((cmdOpts) => actionHandler(cmdOpts));
