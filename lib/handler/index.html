@@ -15,17 +15,6 @@
     />
 
     <style>
-      .demo {
-        font-family: sans-serif;
-        border: 1px solid #eee;
-        border-radius: 2px;
-        padding: 20px 30px;
-        margin-top: 1em;
-        margin-bottom: 40px;
-        user-select: none;
-        overflow-x: auto;
-      }
-
       .connected {
         color: lightgreen;
       }
@@ -34,10 +23,7 @@
         color: lightcoral;
       }
 
-      .data {
-        font-family: sans-serif;
-        border: 1px solid #eee;
-        border-radius: 2px;
+      .data {        
         padding: 20px 10px;
       }
 
@@ -61,37 +47,39 @@
     <title>Httplog</title>
   </head>
   <body>
-    <div id="httplog-app" class="demo container">
-        <span :class="connected">CLI {{ connected }}</span>
-      <div class="data" v-for="item in data">
-        <div class="card">
-          <div class="card-body">
-            <h5 class="card-title lead">Received: <code>{{formatDate(item.receivedTs)}}</code></h5>
-            <h6 class="card-subtitle mb-2 text-muted">
-              <div class="data-items">
-                <span> ID: <code>{{item.id.substring(0, 8)}}</code></span>
-                <span> URL: <code>{{item.url}}</code> </span>
-                <span> Method: <code>{{item.method}}</code> </span>
-                <span> Content-Type: <code>{{item.contentType}}</code></span>
-                <span>
-                  Content-Length: <code>{{item.contentLength}}</code></span
-                >
-              </div>
-            </h6>
-            <p class="card-text">
-                  <div class="request-data" v-if="item.data">
-                    <pre class="pre-scrollable"><code>{{item.data}}</code></pre>
-                  </div>
-                  <div v-else class="d-flex justify-content-center">
-                    <div class="spinner-border" role="status">
-                      <span class="sr-only">Loading...</span>
+    <div id="app" class="container-fuid">
+        <nav class="navbar navbar-light bg-light">
+            <a class="navbar-brand" href="#">httplog</a>
+            <span class="navbar-text">
+                <span :class="connected">CLI {{ connected }}</span>
+                <span class="ml-2 text-secondary">{{ count }} Requests</span>
+            </span>
+        </nav>
+        <div class="container data" v-for="item in data">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title lead">Received: <code>{{formatDate(item.receivedTs)}}</code></h5>
+                    <h6 class="card-subtitle mb-2 text-muted">
+                    <div class="data-items">
+                        <span> ID: <code>{{item.id.substring(0, 8)}}</code></span>
+                        <span> URL: <code>{{item.url}}</code> </span>
+                        <span> Method: <code>{{item.method}}</code> </span>
+                        <span> Content-Type: <code>{{item.contentType}}</code></span>
+                        <span>Content-Length: <code>{{item.contentLength}}</code></span>
                     </div>
-                  </div>
-            </p>
-            <a href="#" class="card-link">Card link</a>
-          </div>
+                </h6>
+                <p class="card-text">
+                    <div class="request-data" v-if="item.data">
+                        <pre class="pre-scrollable"><code>{{item.data}}</code></pre>
+                    </div>
+                    <div v-else class="d-flex justify-content-center">
+                        <div class="spinner-border" role="status">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                    </div>
+                </p>                
+            </div>
         </div>
-      </div>
     </div>
 
     <script
@@ -113,10 +101,10 @@
 
       const HttpLogApp = {
         data() {
-          return {
-            text: "Hello Vue!!",
+          return {            
             connected: 'disconnected',
             data: {},
+            count: 0
           };
         },
 
@@ -133,6 +121,10 @@
             this.connected = connected;
           },
 
+          updateCount() {
+              this.count = Object.keys(this.data).length;
+          },
+
           addData(data) {
             const d = this.data[data.id];
             if (d) {                
@@ -140,11 +132,12 @@
             } else {                
               this.data[data.id] = data;
             }
+            this.updateCount();
           },
         },
       };
 
-      const app = Vue.createApp(HttpLogApp).mount("#httplog-app");
+      const app = Vue.createApp(HttpLogApp).mount("#app");
 
       socket.on("connect", () => {
         app.setConnected('connected');
