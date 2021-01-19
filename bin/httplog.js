@@ -17,6 +17,8 @@ const actionHandler = async (options) => {
     info('\nWelcome to httplog\n');
 
     try {
+
+        let ngrokUrl = null;
         if (!options.port) {
             throw new Error('Option port is required');
         }
@@ -27,7 +29,7 @@ const actionHandler = async (options) => {
 
         if (options.ngrok) {
             debug('Running httplog with ngrok');
-            await ngrok.start(options.port);
+            ngrokUrl = await ngrok.start(options.port);
         }
 
         const requestHandlers = [];
@@ -44,10 +46,9 @@ const actionHandler = async (options) => {
             requestHandlers.push(new FileHandler(options.file));
         }
 
-
         if (options.browser) {
             debug('Running httplog in browser-mode');
-            requestHandlers.push(new BrowserHandler());
+            requestHandlers.push(new BrowserHandler(ngrokUrl));
         }
 
         server.start(options.port, requestHandlers);
