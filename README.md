@@ -35,7 +35,8 @@ Options:
   -V, --version             Outputs current version number
   -p, --port <port>         Port to listen for incoming requests
   -f, --file <file>         Incoming requests will be logged to <file>
-  -n --ngrok                Exposes httplog to public internet using ngrok
+  -b, --browser             Pipe http requests to your preferred browser
+  -n, --ngrok                Exposes httplog to public internet using ngrok
   -d, --debug               Enable debug logging
   --proxy-mode <host:port>  [BETA] Runs httplog in a proxy mode where incoming request will be forwared to "host:port"
   -h, --help                output usage information
@@ -60,6 +61,14 @@ httplog --port 8080 --ngrok
 ```
 
 With the above command the port `8080` will be exposed using the [ngrok](https://ngrok.com/) service.
+
+### browser
+
+Use this option to log incoming requests in your preferred browser, e.g.
+
+```bash
+httplog --port 8080 --browser
+```
 
 ### proxy-mode [Beta]
 
