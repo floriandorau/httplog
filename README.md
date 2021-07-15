@@ -64,11 +64,35 @@ With the above command the port `8080` will be exposed using the [ngrok](https:/
 
 ### browser
 
-Use this option to log incoming requests in your preferred browser, e.g.
+Use this option to log incoming requests in your browser, e.g.
 
 ```bash
 httplog --port 8080 --browser
 ```
+
+### reponse
+
+Use this option to mock response status and data, e.g.
+
+```bash
+httplog --port 8080 --response ./response.json
+```
+
+The `response.json` file should look like the following
+
+```json
+{
+  "status": 200,
+  "type": "json",
+  "data": {
+    "Foo": "Bar"
+  }
+}
+```
+
+The response file will be read with every incoming request which means that you can modify the file content to change response behavior without restarting `httplog` process.
+
+Currently `json` and `text` are supported response types. If no `type` is present `text` will be used as default.
 
 ### proxy-mode [Beta]
 

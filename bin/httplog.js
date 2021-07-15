@@ -11,6 +11,7 @@ const { debug, info, error } = require('../lib/logger');
 const { FileHandler } = require('../lib/handler/file-handler');
 const { LogRequestHandler } = require('../lib/handler/log-handler');
 const { BrowserHandler } = require('../lib/handler/browser-handler');
+const { ResponseHandler } = require('../lib/handler/response-handler');
 const { ProxyRequestHandler } = require('../lib/handler/proxy-handler');
 
 const actionHandler = async (options) => {
@@ -32,8 +33,10 @@ const actionHandler = async (options) => {
             ngrokUrl = await ngrok.start(options.port);
         }
 
-        const requestHandlers = [];
-        requestHandlers.push(new LogRequestHandler(options.pipe));
+        const requestHandlers = [
+            new LogRequestHandler(),
+            new ResponseHandler(options.response)
+        ];
 
         if (options.proxyMode) {
             const [proxyHost, proxyPort] = options.proxyMode.split(':');
@@ -66,9 +69,10 @@ program
     .option('-p, --port <port>', 'Port where to listen for incoming requests')
     .option('-f, --file <file>', 'Pipe http request to <file>')
     .option('-b, --browser', 'Pipe http requests to your preferred browser')
-    .option('-n --ngrok', 'Exposes httplog to the public internet using ngrok')
+    .option('-n, --ngrok', 'Exposes httplog to the public internet using ngrok')
     .option('-d, --debug', 'Enable debug logging')
     .option('--proxy-mode <host:port>', '[BETA] Runs httplog in a proxy mode where incoming request will be forwared to "host:port"')
+    .option('--response <file>', 'Provide a mocked response which will be used for incoming request')
     .action((cmdOpts) => actionHandler(cmdOpts));
 
 program.parse(process.argv);
