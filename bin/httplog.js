@@ -2,6 +2,9 @@
 
 const program = require('commander');
 
+const { join } = require('path');
+const { readFileSync, existsSync } = require('fs');
+
 const pkg = require('../package.json');
 
 const ngrok = require('../lib/ngrok');
@@ -19,6 +22,7 @@ const actionHandler = async (options) => {
     try {
 
         let ngrokUrl = null;
+        let responseBody = null;
         if (!options.port) {
             throw new Error('Option port is required');
         }
@@ -32,8 +36,16 @@ const actionHandler = async (options) => {
             ngrokUrl = await ngrok.start(options.port);
         }
 
+        if (options.responseBody) {
+            const file = join(__dirname, options.responseBody);
+            if (!existsSync(file)) {
+                throw Error(`Cannot find response file ${file}`);
+            }
+            responseBody = readFileSync(file, 'utf8');
+        }
+
         const requestHandlers = [];
-        requestHandlers.push(new LogRequestHandler(options.pipe));
+        requestHandlers.push(new LogRequestHandler(responseBody));
 
         if (options.proxyMode) {
             const [proxyHost, proxyPort] = options.proxyMode.split(':');
@@ -66,7 +78,8 @@ program
     .option('-p, --port <port>', 'Port where to listen for incoming requests')
     .option('-f, --file <file>', 'Pipe http request to <file>')
     .option('-b, --browser', 'Pipe http requests to your preferred browser')
-    .option('-n --ngrok', 'Exposes httplog to the public internet using ngrok')
+    .option('-n, --ngrok', 'Exposes httplog to the public internet using ngrok')
+    .option('-r, --response-body <file>', 'Provide a mocked response body which will be returned for incoming request')
     .option('-d, --debug', 'Enable debug logging')
     .option('--proxy-mode <host:port>', '[BETA] Runs httplog in a proxy mode where incoming request will be forwared to "host:port"')
     .action((cmdOpts) => actionHandler(cmdOpts));
