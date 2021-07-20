@@ -1,6 +1,6 @@
 {
   "name": "@floriandorau/httplog",
-  "version": "1.3.1",
+  "version": "1.4.0",
   "description": "Simple tool to log http requests into your terminal",
   "repository": "github:floriandorau/httplog",
   "main": "index.js",
@@ -8,7 +8,7 @@
     "lint": "eslint ./lib"
   },
   "bin": {
-    "httplog": "./bin/httplog.js"
+    "httplog": "bin/httplog.js"
   },
   "author": "floriandorau",
   "license": "MIT",
