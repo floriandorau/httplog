@@ -32,14 +32,15 @@ Usage: httplog [options]
 Simple tool to log http requests into your terminal
 
 Options:
-  -V, --version             Outputs current version number
-  -p, --port <port>         Port to listen for incoming requests
-  -f, --file <file>         Incoming requests will be logged to <file>
+  -V, --version             output the version number
+  -p, --port <port>         Port where to listen for incoming requests
+  -f, --file <file>         Pipe http request to <file>
+  -r, --response <file>     Provide a mock response from <file>
   -b, --browser             Pipe http requests to your preferred browser
-  -n, --ngrok                Exposes httplog to public internet using ngrok
+  -n, --ngrok               Exposes httplog to the public internet using ngrok
   -d, --debug               Enable debug logging
   --proxy-mode <host:port>  [BETA] Runs httplog in a proxy mode where incoming request will be forwared to "host:port"
-  -h, --help                output usage information
+  -h, --help                display help for command
 ```
 
 ## Options
@@ -64,11 +65,35 @@ With the above command the port `8080` will be exposed using the [ngrok](https:/
 
 ### browser
 
-Use this option to log incoming requests in your preferred browser, e.g.
+Use this option to log incoming requests in your browser, e.g.
 
 ```bash
 httplog --port 8080 --browser
 ```
+
+### reponse
+
+Use this option to mock response status and data, e.g.
+
+```bash
+httplog --port 8080 --response ./response.json
+```
+
+The `response.json` file should look like the following
+
+```json
+{
+  "status": 200,
+  "type": "json",
+  "data": {
+    "Foo": "Bar"
+  }
+}
+```
+
+The response file will be read with every incoming request which means that you can modify the file content to change response behavior without restarting `httplog` process.
+
+Currently `json` and `text` are supported response types. If no `type` is present `text` will be used as default.
 
 ### proxy-mode [Beta]
 
