@@ -68,11 +68,11 @@ program
     .usage('[options]')
     .option('-p, --port <port>', 'Port where to listen for incoming requests')
     .option('-f, --file <file>', 'Pipe http request to <file>')
+    .option('-r, --response <file>', 'Provide a mock response from <file>')
     .option('-b, --browser', 'Pipe http requests to your preferred browser')
     .option('-n, --ngrok', 'Exposes httplog to the public internet using ngrok')
     .option('-d, --debug', 'Enable debug logging')
     .option('--proxy-mode <host:port>', '[BETA] Runs httplog in a proxy mode where incoming request will be forwared to "host:port"')
-    .option('--response <file>', 'Provide a mocked response which will be used for incoming request')
     .action((cmdOpts) => actionHandler(cmdOpts));
 
 program.parse(process.argv);

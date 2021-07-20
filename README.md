@@ -32,14 +32,15 @@ Usage: httplog [options]
 Simple tool to log http requests into your terminal
 
 Options:
-  -V, --version             Outputs current version number
-  -p, --port <port>         Port to listen for incoming requests
-  -f, --file <file>         Incoming requests will be logged to <file>
+  -V, --version             output the version number
+  -p, --port <port>         Port where to listen for incoming requests
+  -f, --file <file>         Pipe http request to <file>
+  -r, --response <file>     Provide a mock response from <file>
   -b, --browser             Pipe http requests to your preferred browser
-  -n, --ngrok                Exposes httplog to public internet using ngrok
+  -n, --ngrok               Exposes httplog to the public internet using ngrok
   -d, --debug               Enable debug logging
   --proxy-mode <host:port>  [BETA] Runs httplog in a proxy mode where incoming request will be forwared to "host:port"
-  -h, --help                output usage information
+  -h, --help                display help for command
 ```
 
 ## Options

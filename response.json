@@ -1,7 +1,0 @@
-{
-    "status": 400,
-    "type": "xml",
-    "data": {
-        "Foo": "Baz"
-    }
-}
