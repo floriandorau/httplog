@@ -8,11 +8,13 @@ const ngrok = require('../lib/ngrok');
 const server = require('../lib/server');
 const { debug, info, error } = require('../lib/logger');
 
-const { FileHandler } = require('../lib/handler/file-handler');
-const { LogRequestHandler } = require('../lib/handler/log-handler');
-const { BrowserHandler } = require('../lib/handler/browser-handler');
-const { ResponseHandler } = require('../lib/handler/response-handler');
-const { ProxyRequestHandler } = require('../lib/handler/proxy-handler');
+const {
+    FileHandler,
+    LogRequestHandler,
+    BrowserHandler,
+    ResponseHandler,
+    ProxyRequestHandler
+} = require('../lib/handler');
 
 const actionHandler = async (options) => {
     info('\nWelcome to httplog\n');
