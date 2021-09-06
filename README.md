@@ -1,6 +1,6 @@
 # httplog
 
-[![Build Status](https://travis-ci.org/floriandorau/httplog.svg?branch=master)](https://travis-ci.org/floriandorau/httplog)
+[![Build Status](https://travis-ci.org/floriandorau/httplog.svg?branch=master)](https://travis-ci.org/floriandorau/httplog) [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=floriandorau_httplog&metric=alert_status)](https://sonarcloud.io/dashboard?id=floriandorau_httplog)
 
 Simple node app to log http request right into your console.
 
