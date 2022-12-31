@@ -1,6 +1,6 @@
 {
   "name": "@floriandorau/httplog",
-  "version": "1.4.1",
+  "version": "1.4.2-RC.0",
   "description": "Simple tool to log http requests into your terminal",
   "repository": "github:floriandorau/httplog",
   "main": "index.js",
