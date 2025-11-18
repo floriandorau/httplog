@@ -26,7 +26,7 @@
     "xml-formatter": "^2.6.1"
   },
   "devDependencies": {
-    "eslint": "^7.12.1"
+    "eslint": "^9.0.0"
   },
   "engines": {
     "node": ">=11.1.0"
